@@ -1,3 +1,6 @@
+//currently a test file to play with importing components into the map container from other locations. 
+
+
 // import React from "react";
 
 // const Popup = ({ feature }) => {

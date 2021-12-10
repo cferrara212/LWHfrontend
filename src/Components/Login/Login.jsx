@@ -1,18 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useForm from "../UseForm/UseForm";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Components/useAuth/useAuth";
-import { BaseURLContext } from "../../services/baseURL-Context";
 import { Spinner, ToastContainer } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { loginUser } from "../../services/functions";
 
 const Login = () =>{
     const {values, handleChange, handleSubmit} = useForm(userLogin);
-    const { baseUrl } = useContext(BaseURLContext);
     const [showToast, setShowToast] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const auth = useAuth();
 
     useEffect(()=>{
@@ -46,11 +43,6 @@ const Login = () =>{
         if (response){
             console.log(response.data)
             localStorage.setItem("contribJWT", response.data.access)
-            // const {token} = response.data
-            // auth.signin(token, () => {
-               
-            //     window.location = "/contributor"
-            // });
             window.location = "/contributor"
         }
         else{

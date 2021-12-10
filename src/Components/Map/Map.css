@@ -1,6 +1,6 @@
 .map-container {
     height: 400px;
-    width: 80%;
+    width: 100%;
     align-content: center;
   }
   .sidebar {
@@ -15,7 +15,3 @@
     margin: 12px;
     border-radius: 4px;
     }
-
-.map-main-container {
-    justify-content: center;
-}

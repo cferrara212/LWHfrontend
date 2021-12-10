@@ -1,0 +1,1 @@
+export var mapToken = 'pk.eyJ1IjoiY2ZlcnJhcmEyMTIiLCJhIjoiY2t3bno4M2Y3MGM5dTJxbjI3eTRxNDRiYyJ9.wOFeSPibvGLbULAcrN2ayg';

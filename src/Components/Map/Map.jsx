@@ -1,20 +1,55 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 import "./Map.css"
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2ZlcnJhcmEyMTIiLCJhIjoiY2t3bno4M2Y3MGM5dTJxbjI3eTRxNDRiYyJ9.wOFeSPibvGLbULAcrN2ayg';
-
+import {mapToken} from "./MaboxToken";
+// mapboxgl.accessToken = 'pk.eyJ1IjoiY2ZlcnJhcmEyMTIiLCJhIjoiY2t3bno4M2Y3MGM5dTJxbjI3eTRxNDRiYyJ9.wOFeSPibvGLbULAcrN2ayg';
+//This is where your actual MapBox token goes. I have mine being imported from a variable in another file. to hide it. 
+mapboxgl.accessToken = mapToken
 
 function Map(){
+    const [chosenFact,setChosenFact] = useState();
+    const [fact, setFact] = useState({});
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [lng, setLng] = useState(-70.9);
     const [lat, setLat] = useState(42.35);
     const [zoom, setZoom] = useState(9);
-    
 
+    const handleOnPopupClick = async (id) => {
+      await setChosenFact(id);
+      await getFact();
+  }
+    
+    const getFact = async () =>{
+      const response = await axios.get(`http://127.0.0.1:8000/api/facts/${chosenFact}/`);
+      if(response){
+          setFact(response.data);
+          console.log("factdata", response.data);
+      }
+  }
+ function renderFactDetail(){
+   if (fact === null){
+     return(
+       <div></div>
+     );
+   }
+   return(
+<div>
+   <h1>fact details</h1>
+   <ul>
+      <li>{fact.name}</li>
+      <li>{fact.state}</li>
+      <li>{fact.city}</li>
+      <li>{fact.street}</li>
+      <li>{fact.zip}</li>
+      <li>{fact.fact}</li>
+   </ul>
+</div>
+   );
+ }
             
       //  all of the DOM portions dealing with the map are placed inside of the useEffect for two reasons. The first reason is
       //  for the updating of the vector tile sequences in the map. The second reason is because of how MapBox deals with the DOM
@@ -67,7 +102,8 @@ const popup = new mapboxgl.Popup({
   closeOnClick: false
 });
 //
-// On load geoJSON.
+// On load geoJSON. + onload addLayer. this is an asynchronous process, so it must have a load listener, otherwise it tries to
+// add the new layer before the map style vector tiles layer has been loaded from the MapBox API.
 //
 map.current.on('load', () => {
   map.current.addSource('places', {
@@ -78,6 +114,7 @@ map.current.on('load', () => {
   {
   'type': 'Feature',
   'properties': {
+    'id': '1',
   'description':
   '<strong>Mt Moriah Cemetary</strong><p>This historic cemetery has many famous figures buried here. Notably: Seth Bullock, Wild Bill Hickock, Calamity Jane, and Harris Franklin. It is also the burial place for many chinese immigrants that ran the mines.</p>'
   },
@@ -134,18 +171,18 @@ map.current.on('load', () => {
     }
     });
 });
-  // Add a layer showing the places.
   
- 
+ // another listener, mousenter is like hover. getcanvas grabs styles. the coordinates have .slice used to split the array
+ // and pull lng, and lat out. 
 map.current.on('mouseenter', 'places', (e)=> {
 map.current.getCanvas().style.cursor = 'pointer';
-
+const id = e.features[0].properties.id;
 const description = e.features[0].properties.description;
 const coordinates = e.features[0].geometry.coordinates.slice();
 
 // Ensure that if the map is zoomed out such that multiple
 // copies of the feature are visible, the popup appears
-// over the copy being pointed to.
+// over the copy being pointed to. Someone else wrote this code so I cant explain it.
 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 }
@@ -154,13 +191,14 @@ coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 // based on the feature found.
 popup
 .setLngLat(coordinates)
-.setHTML(description)
+.setHTML(description, id)
 .addTo(map.current);
 
 map.current.on('click', ()=>{
-  window.location = "/contributor";
+  handleOnPopupClick(id)
 })
 });
+
 
 map.current.on('mouseleave', 'places', () => {
 map.current.getCanvas().style.cursor = '';
@@ -189,6 +227,7 @@ popup.remove();
                     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
                 </div>
             </div>
+           {renderFactDetail()}
         </div>
     )
 }

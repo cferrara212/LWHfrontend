@@ -1,14 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import {protectedEnpointPostRequest} from "../../services/functions"
-import { BaseURLContext } from '../../services/baseURL-Context';
 import useForm from '../UseForm/UseForm';
 import { Spinner } from 'react-bootstrap';
 
 function Contributor(){
 
-const { values, errors, handleChange, handleSubmit } = useForm(addFact);
-const { baseURL } = useContext(BaseURLContext);
+const { values, handleChange, handleSubmit } = useForm(addFact);
 const [isLoading, setIsLoading] = useState(false);
 const [chosenFact, setChosenFact] = useState();
 const [fact, setFact] = useState();

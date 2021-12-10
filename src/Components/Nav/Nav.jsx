@@ -21,37 +21,34 @@ function Nav(){
 
     function displayContributor(){
         return(
-          <div class="container-fluid">
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
           
-            <a class="navbar-brand" href="#">LHW</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <a className="navbar-brand" href="#">LHW</a>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
         
-            <div class="collapse navbar-collapse" id="navbarColor03">
-              <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                  <Link to="/"><a class="nav-link active">Home
-                    <span class="visually-hidden">(current)</span>
+            <div className="collapse navbar-collapse" id="navbarColor03">
+              <ul className="navbar-nav me-auto">
+                <li className="nav-item">
+                  <Link to="/"><a className="nav-link active">Home
+                    <span className="visually-hidden">(current)</span>
                   </a>
                   </Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link to="/contributor">
-                  <a class="nav-link">Contributions Page</a>
+                  <a className="nav-link">Contributions Page</a>
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Make Contribution</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">About LHW</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">About LHW</a>
                 </li>
               </ul>
-              <form class="d-flex">
-                <Link to="/register"><button class="btn btn-secondary my-2 my-sm-0" type="submit">Register</button></Link>
-                <Link to="/"><button class="btn btn-secondary my-2 my-sm-0" type="submit" onClick={()=>{localStorage.removeItem('contribJWT'); setPageNumber(1)}}>Logoff</button></Link>
+              <form className="d-flex">
+                <Link to="/register"><button className="btn btn-secondary my-2 my-sm-0" type="submit">Register</button></Link>
+                <Link to="/"><button className="btn btn-secondary my-2 my-sm-0" type="submit" onClick={()=>{localStorage.removeItem('contribJWT'); setPageNumber(1)}}>Logoff</button></Link>
               </form>
             </div>
           
@@ -63,28 +60,28 @@ function Nav(){
     function displayUser(){
 
         return(
-          <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
             
-              <a class="navbar-brand" href="#">LHW LOGO</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+              <a className="navbar-brand" href="#">LHW LOGO</a>
+              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
               </button>
           
-              <div class="collapse navbar-collapse" id="navbarColor03">
-                <ul class="navbar-nav me-auto">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                      <span class="visually-hidden">(current)</span>
+              <div className="collapse navbar-collapse" id="navbarColor03">
+                <ul className="navbar-nav me-auto">
+                  <li className="nav-item">
+                    <a className="nav-link active" href="#">Home
+                      <span className="visually-hidden">(current)</span>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#">About</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <Link to="/register"><button class="btn btn-secondary my-2 my-sm-0" type="submit">Register</button></Link>
-                  <Link to="/login"><button class="btn btn-secondary my-2 my-sm-0" type="submit">Login</button></Link>
+                <form className="d-flex">
+                  <Link to="/register"><button className="btn btn-secondary my-2 my-sm-0" type="submit">Register</button></Link>
+                  <Link to="/login"><button className="btn btn-secondary my-2 my-sm-0" type="submit">Login</button></Link>
                 </form>
               </div>
             
