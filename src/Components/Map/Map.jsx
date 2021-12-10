@@ -5,7 +5,6 @@ import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-load
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import {mapToken} from "./MaboxToken";
-// mapboxgl.accessToken = 'pk.eyJ1IjoiY2ZlcnJhcmEyMTIiLCJhIjoiY2t3bno4M2Y3MGM5dTJxbjI3eTRxNDRiYyJ9.wOFeSPibvGLbULAcrN2ayg';
 //This is where your actual MapBox token goes. I have mine being imported from a variable in another file. to hide it. 
 mapboxgl.accessToken = mapToken
 
