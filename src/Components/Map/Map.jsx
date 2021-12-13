@@ -8,10 +8,11 @@ import { mapToken } from "./MaboxToken";
 // THIS IS FOR PRESENTATION ONLY!! If you do not want your API key to be known, you must have it stored in a server. React.js
 // is a client side application! everything that you put into your React_App can be easily accessed client side with simple developer
 // tools.
-
-let Afact = ""
-
 mapboxgl.accessToken = mapToken
+
+let Afact = "";
+
+
 function Map() {
   const [chosenFact, setChosenFact] = useState();
   const [fact, setFact] = useState({});
@@ -54,7 +55,6 @@ function Map() {
       </div>
     );
   }
-
   //  all of the DOM portions dealing with the map are placed inside of the useEffect for two reasons. The first reason is
   //  for the updating of the vector tile sequences in the map. The second reason is because of how MapBox deals with the DOM
   // MapBox frequently manipulates the DOM along side React.js. This is also partially the reason for needing to Instance the 
@@ -81,6 +81,8 @@ function Map() {
         mapboxgl: mapboxgl
       })
     );
+  
+  
     // this is an on click event listener. this can also be a .on('load') for example, and does not have to be on click.
     // map.current.on('click', (event) => {
     //     const features = map.current.queryRenderedFeatures(event.point, {
@@ -207,7 +209,7 @@ function Map() {
       console.log("MouseClick: ", Afact)
       // console.log(featureid);
       handleOnPopupClick(Afact);
-    })
+    });
 
     map.current.on('mouseleave', 'places', () => {
       map.current.getCanvas().style.cursor = '';
@@ -228,13 +230,14 @@ function Map() {
   });
 
 
-
+  let geocoderData = {};
   return (
     <div className="map-main-container">
       <div ref={mapContainer} className="map-container">
         <div className="sidebar">
           Longitude: {lng} | Latitude: {lat} |
         </div>
+        <div id="geocoder" class="geocoder"></div>
       </div>
       {renderFactDetail()}
     </div>
