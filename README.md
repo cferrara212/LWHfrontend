@@ -1,7 +1,7 @@
 # LWHfrontend
-This is the Local History Webapp React Frontend. 
+<h1>This is the Local History Webapp React Frontend.</h1> 
 
-#Purpose
+<h3>#Purpose</h3>
 
 The application is a local history application. The purpose of this 
 application is to give individuals who may like to travel to new locations 
@@ -12,16 +12,15 @@ happened in a specific location, or has a location still existing, it will have
 a map with a marker for that location. The app also allows contributors to make 
 accounts, so that they can add little known historical facts for their own areas.
 
+<br/>
+<h3>#Technologies</h3>
+Mapbox API<br/>
+Python Django REST backend<br/>
+React.js Frontend<br/>
+JWT authentication<br/>
 
-#Technologies
-Mapbox API
-Python Django REST backend
-React.js Frontend
-JWT authentication
-
-
-#Technical
-
-DOM manipulation and instancing. 
-Django custom queries.
-user Authentication with JWT tokens.
+<br/>
+<h3>#Technical</h3>
+DOM manipulation and instancing.<br/> 
+Django custom queries.<br/>
+user Authentication with JWT tokens.<br/>
