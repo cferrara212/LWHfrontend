@@ -16,10 +16,10 @@ function App() {
 
   return (
     <BaseURLContext.Provider value={baseURLValue}>
+     
       <div className="App">
         <div className="route-container">
           <div><Nav /></div>
-          <div></div>
           <Routes>
             <Route path="/" exact element={<Map />} />
             <Route path="/register" element={<Register />} />
@@ -28,6 +28,7 @@ function App() {
           </Routes>
         </div>
       </div>
+     
     </BaseURLContext.Provider>
   );
 }

@@ -52,7 +52,8 @@ const getContributions= async () =>{
         const response = await protectedEnpointPostRequest("http://127.0.0.1:8000/api/facts/user/", factData , token);
         if (response){
             console.log("factpost", response);
-            getContributions();
+            await getContributions();
+            setPageState(1);        
         }
     }
    
@@ -116,10 +117,12 @@ function renderer(){
     return (
         <div>
             <h1>Welcome, and thank you for contributing to the LHW library.</h1><br/>
-            <h2> These are you current fact contributions</h2>
+            <h3> These are your current fact contributions</h3>
+            <br/>
             {contribs.map((contrib)=>
-                <div>{contrib.name}<button className="btn btn-secondary my-2 my-sm-0" onClick={()=>handleOnClick(contrib.id)}>Fact Details</button> </div>
+                <div className="contribs-container"><h4>{contrib.name}</h4><button className="btn-sm btn-secondary my-2 my-sm-0" onClick={()=>handleOnClick(contrib.id)}>Fact Details</button></div>
             )}
+            <br/>
             <div>
                 <button className="btn btn-secondary my-2 my-sm-0" onClick={()=>{setPageState(2)}}>Add Fact</button>
             </div>
@@ -227,6 +230,7 @@ function renderMakeContribution(){
                         className="btn btn-primary mb-4"
                         type="submit"
                         hidden={isLoading ? true:false}
+
                     >
                         Submit Fact
                     </button>
@@ -241,6 +245,7 @@ function renderMakeContribution(){
                     </fieldset>
                 </form>
             </div>
+            <br/>
             <button className="btn btn-secondary my-2 my-sm-0" onClick={()=>{setPageState(1)}}>Back</button>
         </div>
     )
@@ -256,17 +261,18 @@ function renderMakeContribution(){
 function renderFactDetail(){
     return(
         <div>
-            <div>
+            <div className='container'>
                 <h1>Fact Details Page</h1>
-                <ul>
+                
                    <li>{fact.name}</li>
                    <li>{fact.state}</li>
                    <li>{fact.city}</li>
                    <li>{fact.street}</li>
                    <li>{fact.zip}</li>
                    <li>{fact.fact}</li>
-                </ul>
+                
             </div>
+            <br/>
             <div>
                 <button className="btn btn-secondary my-2 my-sm-0" onClick={()=>{setPageState(1)}}>Back</button>
             </div>
