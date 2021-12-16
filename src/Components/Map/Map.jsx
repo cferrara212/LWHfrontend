@@ -4,27 +4,29 @@ import "./Map.css"
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 import { mapToken } from "./MaboxToken";
 // THIS IS FOR PRESENTATION ONLY!! If you do not want your API key to be known, you must have it stored in a server. React.js
 // is a client side application! everything that you put into your React_App can be easily accessed client side with simple developer
-// tools.
+// tools. There are many mentions of creating an .env file and putting your key inside...this helps with gituhub, but does not matter
+// in development, as the key can still be had through developer tools.
 mapboxgl.accessToken = mapToken
 
 //these are global variables I have created to use information from my map in other areas of my app. Global variables must be used
 // instead of usestate() for any dynamic variable that is being pulled from MapBox. This is because useState() is part of the 
 // react DOM, and we will be giving our map a separate DOM instance. 
 let Afact = "";
-
+let data = {};
 
 function Map() {
+  // const [callRoute,SetCallRoute] = useState();  FOR MAP ROUTING CODE, TO BE FINISHED.
   const [cityFacts, setCityFacts] = useState();
   const [fact, setFact] = useState({});
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-103.7282);
-  const [lat, setLat] = useState(44.3771 );
+  const [lng, setLng] = useState(-103.5127 );
+  const [lat, setLat] = useState(44.4111 );
   const [zoom, setZoom] = useState(11);
-
  
   let Place = {};
   const getCityFacts = async (cityName) =>{
@@ -59,6 +61,20 @@ function Map() {
     const idTransferred = id
     await getFact(idTransferred);
   }
+
+  //TO DO:
+  //FINISH MAP ROUTING CODE:
+                                // const start = [-103.7247, 44.3803];
+                                // const getRouteCall = async (end) =>{
+                                //   const response = await axios.get(`https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=sk.eyJ1IjoiY2ZlcnJhcmEyMTIiLCJhIjoiY2t4ODJiMGl2MDFoNzMwb2NoN2dpZ2kybyJ9.1P60va4QX6DnLMJPx20XNg`);
+                                //   console.log("getRoutecall",response);
+                                //   SetCallRoute(response.data);
+                                //   console.log("callroute",callRoute);
+                                //   console.log("callrouteroutes", callRoute.routes)
+                                //   data = response;
+                                // }
+  
+
 
   const getFact = async (id) => {
     const response = await axios.get(`http://127.0.0.1:8000/api/facts/${id}/`);
@@ -223,12 +239,25 @@ function Map() {
             {
               'type': 'Feature',
               'properties': {
+                'id': '16',
                 'description':
                   '<strong>William Jackson Palmer Statue</strong><p>William Jackson Palmer was a railroad tycoon, and the founder of Colorado Springs. He was a civil engineer, and the philanthropist founder of the University of Colorado.</p>'
               },
               'geometry': {
                 'type': 'Point',
                 'coordinates': [-104.8215, 38.8381]
+              }
+            },
+            {
+              'type': 'Feature',
+              'properties': {
+                'id': '2',
+                'description':
+                  '<strong>Historic Housing</strong><p>This historic downtown housing area was build in the 1930s, leading to colorado springs being a major trade route.</p>'
+              },
+              'geometry': {
+                'type': 'Point',
+                'coordinates': [-104.8206, 38.8589]
               }
             },
           ]
@@ -282,6 +311,130 @@ function Map() {
       map.current.getCanvas().style.cursor = '';
       popup.remove();
     });
+    
+    //TODO:
+    //FINISH MAP ROUTING CODE BELOW:
+                        //     map.current.on('click', (event) => {
+                        //       const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+                        //       const end = {
+                        //         type: 'FeatureCollection',
+                        //         features: [
+                        //           {
+                        //             type: 'Feature',
+                        //             properties: {},
+                        //             geometry: {
+                        //               type: 'Point',
+                        //               coordinates: coords
+                        //             }
+                        //           }
+                        //         ]
+                        //       };
+                        //       if (map.current.getLayer('end')) {
+                        //         map.current.getSource('end').setData(end);
+                        //       } else {
+                        //         map.current.addLayer({
+                        //           id: 'end',
+                        //           type: 'circle',
+                        //           source: {
+                        //             type: 'geojson',
+                        //             data: {
+                        //               type: 'FeatureCollection',
+                        //               features: [
+                        //                 {
+                        //                   type: 'Feature',
+                        //                   properties: {},
+                        //                   geometry: {
+                        //                     type: 'Point',
+                        //                     coordinates: coords
+                        //                   }
+                        //                 }
+                        //               ]
+                        //             }
+                        //           },
+                        //           paint: {
+                        //             'circle-radius': 10,
+                        //             'circle-color': '#f30'
+                        //           }
+                        //         });
+                        //       }
+                        //       getRoute(coords);
+                        //     });
+
+
+                            
+                        // const getRoute = async ()=> {
+                        //   await getRouteCall(start);
+                        //   console.log("callrouteinmap", callRoute);
+                        //   const data = callRoute.data;
+                        //   const route = data.geometry.coordinates;
+                        //   const geojson = {
+                        //     type: 'Feature',
+                        //     properties: {},
+                        //     geometry: {
+                        //       type: 'LineString',
+                        //       coordinates: route
+                        //     }
+                        //   };
+                        //   // if the route already exists on the map, we'll reset it using setData
+                        //   if (map.current.getSource('route')) {
+                        //     map.current.getSource('route').setData(geojson);
+                        //   }
+                        //   // otherwise, we'll make a new request
+                        //   else {
+                        //     map.current.addLayer({
+                        //       id: 'route',
+                        //       type: 'line',
+                        //       source: {
+                        //         type: 'geojson',
+                        //         data: geojson
+                        //       },
+                        //       layout: {
+                        //         'line-join': 'round',
+                        //         'line-cap': 'round'
+                        //       },
+                        //       paint: {
+                        //         'line-color': '#3887be',
+                        //         'line-width': 5,
+                        //         'line-opacity': 0.75
+                        //       }
+                        //     });
+                        //   }
+                        // }
+
+                        // map.current.on('load', () => {
+                        //   // make an initial directions request that
+                        //   // starts and ends at the same location
+                        //   getRoute();
+
+                        //   // Add starting point to the map
+                        //   map.current.addLayer({
+                        //     id: 'point',
+                        //     type: 'circle',
+                        //     source: {
+                        //       type: 'geojson',
+                        //       data: {
+                        //         type: 'FeatureCollection',
+                        //         features: [
+                        //           {
+                        //             type: 'Feature',
+                        //             properties: {},
+                        //             geometry: {
+                        //               type: 'Point',
+                        //               coordinates: start
+                        //             }
+                        //           }
+                        //         ]
+                        //       }
+                        //     },
+                        //     paint: {
+                        //       'circle-radius': 10,
+                        //       'circle-color': '#3887be'
+                        //     }
+                        //   });
+                        //   // this is where the code from the next step will go
+                        // });
+
+                        //     const start = [-103.7247, 44.3803];
   });
 
   // this useEffect checks the current status of the map reference. If the map reference is no longer current, it will update 

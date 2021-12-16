@@ -1,13 +1,11 @@
 import React, {useContext, useState,} from 'react';
-import { BaseURLContext } from "../../services/baseURL-Context";
+import axios from 'axios';
 import { useNavigate } from "react-router";
-import { defaultPostRequest } from "../../services/functions";
 import { Spinner } from "react-bootstrap";
 import useForm from '../UseForm/UseForm';
 import "./Register.css"
 const Register = () => {
     const { values, errors, handleChange, handleSubmit } = useForm(registerUser);
-    const { baseUrl } = useContext(BaseURLContext);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -23,7 +21,7 @@ const Register = () => {
         };
 
         setIsLoading(true);
-        const response = await defaultPostRequest(`${baseUrl}auth/register/`, registrationData);
+        const response = await axios.post("http://127.0.0.1:8000/api/auth/register/", registrationData);
         if (response) {
             navigate("/login");
         }
@@ -140,7 +138,7 @@ const Register = () => {
                         }
                         className="btn btn-primary mb-4"
                         type="submit"
-                        hidden={isLoading ? false:true}
+                        hidden={isLoading ? true: false}
                     >
                         Register
                     </button>
@@ -148,7 +146,7 @@ const Register = () => {
                                 classname="m-auto"
                                 animation="border"
                                 role="status"
-                                hidden={isLoading ? true : false}>
+                                hidden={isLoading ? false : true}>
                                     <span className="visually-hidden">Loading...</span>
                                 </Spinner>
                 </div>
